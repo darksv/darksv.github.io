@@ -1,0 +1,49 @@
+<html>
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
+</head>
+<body>
+<main>
+    <div class="controls">
+        <label for="size">Size:</label>
+        <input type="number" name="size" id="size" value="512" step="1">
+        <button class="button-primary" id="render">render</button>
+    </div>
+    <p id="log"></p>
+    <canvas id="drawing" width="512" height="512"></canvas>
+
+
+</main>
+
+<script src="rt_wasm.js"></script>
+<script>
+      const { draw } = wasm_bindgen;
+      async function run() {
+        await wasm_bindgen('rt_wasm_bg.wasm');
+
+        const canvas = document.getElementById('drawing');
+        const ctx = canvas.getContext('2d');
+
+        const sizeInput = document.getElementById('size');
+        const renderBtn = document.getElementById('render');
+
+        renderBtn.addEventListener('click', () => {
+            const size = parseInt(sizeInput.value) || 0;
+            canvas.width = size;
+            canvas.height = size;
+
+            let start = new Date().getTime();
+            draw(ctx, size, size);
+            let end = new Date().getTime();
+            let time = end - start;
+
+            const log = document.getElementById('log');
+            log.innerText = 'Render time: ' + time + 'ms';
+        });
+      }
+      run();
+    </script>
+<script src="index.js"></script>
+
+</body>
+</html>
