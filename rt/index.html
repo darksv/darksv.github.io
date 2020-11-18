@@ -6,7 +6,7 @@
 <main>
     <div class="controls">
         <label for="size">Size:</label>
-        <input type="number" name="size" id="size" value="512" step="1">
+        <input type="number" name="size" id="size" value="64" step="1">
         <button class="button-primary" id="render">render</button>
     </div>
     <p id="log"></p>
@@ -40,6 +40,8 @@
             const log = document.getElementById('log');
             log.innerText = 'Render time: ' + time + 'ms';
         });
+          
+        renderBtn.click();
       }
       run();
     </script>
